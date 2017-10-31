@@ -1,0 +1,4 @@
+the commit doesn't contain a .md file, so the .pdf was evaluated
+- mean and median in part1 are wrong because total_daily_steps sums up the steps without removing NAs
+- time series would be more readable with minutes on the xaxis (didn't remove points for it)
+- peak should be at 8:35, which is hardly the 104th interval
