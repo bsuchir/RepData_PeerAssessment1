@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE,eval = TRUE)
 
 We are first going to download the file, unzip the file and read the data 
 
-```{r echo=FALSE,message=FALSE,warning=FALSE}
+```{r echo=TRUE,message=FALSE,warning=FALSE}
 library(dplyr)
 library(ggplot2)
 setwd("/Users/Suchir/Documents/GitHub/R_markdown_assignment")
@@ -36,7 +36,7 @@ Let us first calculate the total number of steps per day.
 Best way to do this would be to aggregate and sum the data on a daily basis. 
 ```{r echo=TRUE}
 daily_steps<-group_by(activity_data,date)
-total_daily_steps<-summarise(daily_steps,sum(steps))
+total_daily_steps<-summarise(daily_steps,sum(steps),na.rm=TRUE)
 hist(total_daily_steps$`sum(steps)`,main="Histogram of total daily steps",
      xlab="Total daily steps",ylab="Frequency",border="red",col="black",
      ylim=c(0,30))
@@ -65,12 +65,13 @@ we would like to plot the average number of steps for a given time interval acro
 ```{r echo=TRUE}
 average_daily_steps<-group_by(activity_data,interval)
 average_steps<-summarise(average_daily_steps,mean(steps,na.rm=TRUE))
-which.max(average_steps$`mean(steps, na.rm = TRUE)`)
+max_interval<-which.max(average_steps$`mean(steps, na.rm = TRUE)`)
+average_steps[max_interval,1]
 plot(average_steps,type="l",ylab="average number of steps in the interval",xlab="interval of the day",main="Plot of steps vs. interval",col="blue")
 ```
 
 The above shows the plot of the average number of steps during the day. 
-As expected the graph shows a user sleeping for the early parts of the day and is most active during the early half of the day, hitting a peak at: 104th interval.
+As expected the graph shows a user sleeping for the early parts of the day and is most active during the early half of the day, hitting a peak at: 8:35 into the day.
 
 ##Imputing Missing Values
 In this exercise we will first find out what are the number of missing values, 
